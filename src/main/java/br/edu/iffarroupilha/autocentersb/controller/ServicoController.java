@@ -10,44 +10,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/servico")
-public class ServicoController {
+public class ServicoController extends BaseController<Servico, ServicoService > {
 
-    private final ServicoService servicoService;
-    private ServicoService servico;
-
-    public ServicoController(ServicoService servico, ServicoService servicoService) {
-        this.servico = servico;
-        this.servicoService = servicoService;
-    }
-
-    @CrossOrigin("http://localhost:4200")
-    @GetMapping()
-    public List<Servico> listarServico() {
-
-        return servico.buscarTodos();
-    }
-
-    @CrossOrigin("http://localhost:4200")
-    @PostMapping
-    public void cadastrarNovoServico(@RequestBody Servico servico)
-    {
-        servicoService.salvar(servico);
-    }
-
-    @PutMapping
-    public void atualizarServico(@RequestBody Servico servico)
-    {
-        servicoService.salvar(servico);
-    }
-
-    @DeleteMapping("/{idServico}")
-    public void deletarServico(@RequestParam Long idServico) {
-
-        servico.delete(idServico);
+    public ServicoController(ServicoService servico) {
+      super(servico);
     }
 
     @GetMapping("/busca-por-descricao/{termo}")
     public List<Servico> teste(@PathVariable String termo){
-        return  servico.buscaPorDescricao(termo);
+        return  service.buscaPorDescricao(termo);
     }
 }
